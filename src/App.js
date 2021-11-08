@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import NovelDetails from "./components/NovelDetails/NovelDetails";
+
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import "swiper/swiper-bundle.min.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import "./App.scss";
+import NovelReader from "./components/NovelReader/NovelReader";
+import Home from "./components/Home/Home";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/novel/:name" component={NovelDetails} exact />
+        <Route path="/novel/:name/:number" component={NovelReader} exact />
+      </Switch>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

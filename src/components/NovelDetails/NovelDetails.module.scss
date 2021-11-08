@@ -1,0 +1,63 @@
+.noveldetails {
+  &__chapterlist {
+    ul {
+      border: 1px solid lightgray;
+
+      a {
+        color: black;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        padding: 12px;
+        border-bottom: 1px solid lightgray;
+        transition: all 0.2s ease-in-out;
+
+        @media (min-width: 576px) {
+          flex-direction: row;
+          justify-content: space-between;
+        }
+
+        &:hover {
+          background-color: lightgray;
+        }
+      }
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+
+    @media (min-width: 576px) {
+      align-items: flex-end;
+      flex-direction: row;
+    }
+
+    &__img {
+      margin: 0 20px;
+    }
+
+    &__info {
+      margin-top: 20px;
+
+      span {
+        display: inline-block;
+        border: 1px solid lightgray;
+        padding: 4px 6px;
+        border-radius: 10px;
+        line-height: 1;
+        margin: 4px;
+      }
+    }
+  }
+
+  &__listtitle__flex {
+    padding: 0 5px;
+    span {
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
