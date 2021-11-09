@@ -6,7 +6,7 @@ import Slider from "../Slider/Slider";
 const Home = () => {
   return (
     <Page>
-      <section className="container shadow-sm p-4 mx-auto my-5" style={{ border: "1px solid rgb(77, 74, 74)", borderRadius: "10px" }}>
+      <section className="container box-shadow p-4 mx-auto my-5 border">
         <h4>Hey there!</h4>
         <p style={{ lineHeight: 1.8, fontSize: "18px", fontWeight: 500 }}>
           This site is a part of presonal project development, all the original works belong to the respective authors and translators. This web app is built using react and react-bootstrap, and the data comes from this

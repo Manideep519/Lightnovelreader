@@ -111,7 +111,7 @@ const NovelDetails = () => {
             <Skeleton count={6} width="80%" />
             <h3>Chapters</h3>
             <hr />
-            <Skeleton count={10} height={"25px"} />
+            <Skeleton count={7} height={"35px"} />
             <div className="mb-3"></div>
           </>
         )}

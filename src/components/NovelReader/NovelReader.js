@@ -87,7 +87,7 @@ const NovelReader = () => {
       <Container className="container">
         {!isLoading && chapterData && currentNovelData && nextPrevChapter ? (
           <div className={styles.novelreader__container}>
-            <div className={`shadow-sm rounded ${styles.novelreader__title}`}>
+            <div className={` ${styles.novelreader__title}`}>
               <div className={styles.novelreader__title__links}>
                 <Link to={"/"}>
                   <span>Home /</span>
@@ -111,9 +111,9 @@ const NovelReader = () => {
                 ) : null}
               </div>
             </div>
-            <div className={`shadow-sm rounded ${styles.novelreader__view}`} dangerouslySetInnerHTML={{ __html: chapterData.data }} />
+            <div className={` ${styles.novelreader__view}`} dangerouslySetInnerHTML={{ __html: chapterData.data }} />
 
-            <div className="d-flex justify-content-center py-3 shadow-sm rounded">
+            <div className="d-flex justify-content-center py-3 ">
               {nextPrevChapter.prevChapterIndex < currentNovelData.chaptersListData.length ? (
                 <Link to={`/novel/${name}/${currentNovelData.chaptersListData[nextPrevChapter.prevChapterIndex].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "")}`} className={`btn btn-primary me-1`}>
                   <span> &larr; prev </span>

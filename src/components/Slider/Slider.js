@@ -55,15 +55,15 @@ const Slider = () => {
         spaceBetween={20}
         pagination={{ clickable: true }}
         keyboard={{ enabled: true }}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: true,
-        }}
+        // autoplay={{
+        //   delay: 5000,
+        //   disableOnInteraction: true,
+        // }}
       >
         {!isLoading && popularNovelData ? (
           popularNovelData.map((data, i) => {
             return (
-              <SwiperSlide className={`${styles.slider__item} shadow rounded`} key={i}>
+              <SwiperSlide className={`${styles.slider__item} border`} key={i}>
                 <div className={styles.slider__img}>
                   <img src={data.imageUrl} alt="web novel coverphoto" />
                 </div>

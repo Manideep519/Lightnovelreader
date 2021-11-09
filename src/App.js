@@ -1,19 +1,23 @@
+// components
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Home from "./components/Home/Home";
 import NovelDetails from "./components/NovelDetails/NovelDetails";
-
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
+import NovelReader from "./components/NovelReader/NovelReader";
+// packages
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import axios from "axios";
+// css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "swiper/swiper-bundle.min.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./App.scss";
-import NovelReader from "./components/NovelReader/NovelReader";
-import Home from "./components/Home/Home";
+
+axios.defaults.baseURL = "https://light-novel-scraper-api.herokuapp.com/";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router basename="/">
       <Header />
       <Switch>
         <Route path="/" component={Home} exact />
@@ -21,7 +25,7 @@ function App() {
         <Route path="/novel/:name/:number" component={NovelReader} exact />
       </Switch>
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 }
 
