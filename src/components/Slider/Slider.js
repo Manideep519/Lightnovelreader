@@ -9,6 +9,7 @@ import axios from "axios";
 import { Container, Button } from "react-bootstrap";
 import styles from "./Slider.module.scss";
 import { Link } from "react-router-dom";
+import { server_url } from "../../App";
 
 SwiperCore.use([Keyboard, Autoplay, Pagination]);
 
@@ -71,10 +72,16 @@ const Slider = () => {
                   <h4>{data.title}</h4>
                   <h6>Rating : {data.score}</h6>
                   <h6>Last chapter :{data.lastestChapter}</h6>
-                  <Link className={`${styles.slider__btn} btn btn-primary`} to={`/novel${data.link.replace("http://light-novel-scraper-api.herokuapp.com/novel", "")}`}>
+                  <Link
+                    className={`${styles.slider__btn} btn btn-primary`}
+                    to={`${data.link.replace(server_url, "")}`}
+                  >
                     View Novel
                   </Link>
-                  <Link className={`${styles.slider__btn} btn btn-primary`} to={`/novel${data.link.replace("http://light-novel-scraper-api.herokuapp.com/novel", "")}chapter-1`}>
+                  <Link
+                    className={`${styles.slider__btn} btn btn-primary`}
+                    to={`${data.link.replace(server_url, "")}chapter-1`}
+                  >
                     Start Reading
                   </Link>
                 </div>

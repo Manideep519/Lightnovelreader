@@ -3,7 +3,7 @@ import { Container, Navbar, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     if (darkMode) {

@@ -7,6 +7,7 @@ import { Container } from "react-bootstrap";
 import styles from "./NovelReader.module.scss";
 import { Link } from "react-router-dom";
 import Page from "../Page";
+import { server_url } from "../../App";
 
 const NovelReader = () => {
   const [chapterData, setChapterData] = useState();
@@ -24,6 +25,7 @@ const NovelReader = () => {
       axios
         .get(`novel/${name}/${number}`)
         .then((response) => {
+          console.log("response.data", response.data);
           setChapterData(response.data);
           setIsLoading(false);
         })
@@ -39,7 +41,10 @@ const NovelReader = () => {
 
   useEffect(() => {
     const request = axios.CancelToken.source();
-    if (localStorage.getItem("currentNovelInfo") && localStorage.getItem("currentNovelName") === name) {
+    if (
+      localStorage.getItem("currentNovelInfo") &&
+      localStorage.getItem("currentNovelName") === name
+    ) {
       setCurrentNovelData(JSON.parse(localStorage.getItem("currentNovelInfo")));
       setIsLoading(false);
     } else {
@@ -70,8 +75,17 @@ const NovelReader = () => {
     function getNextPrevChapters() {
       if (currentNovelData) {
         for (let i = 0; i < currentNovelData.chaptersListData.length; i++) {
-          if (currentNovelData.chaptersListData[i].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "") === number) {
-            setNextPrevChapters({ currentChapterIndex: i, prevChapterIndex: i + 1, nextChapterIndex: i - 1 });
+          if (
+            currentNovelData.chaptersListData[i].chapterLinkName.replace(
+              `${server_url}/novel/${name}/`,
+              ""
+            ) === number
+          ) {
+            setNextPrevChapters({
+              currentChapterIndex: i,
+              prevChapterIndex: i + 1,
+              nextChapterIndex: i - 1,
+            });
             break;
           } else {
             continue;
@@ -82,10 +96,15 @@ const NovelReader = () => {
     getNextPrevChapters();
   }, [currentNovelData, name, number]);
 
+  console.log("isloading", isLoading);
+  console.log("chapterData", chapterData);
+  console.log("currentNovelData", currentNovelData);
+  console.log("nextPrevChapter", nextPrevChapter);
+
   return (
     <Page>
       <Container className="container">
-        {!isLoading && chapterData && currentNovelData && nextPrevChapter ? (
+        {!isLoading && chapterData && currentNovelData ? (
           <div className={styles.novelreader__container}>
             <div className={` ${styles.novelreader__title}`}>
               <div className={styles.novelreader__title__links}>
@@ -95,33 +114,69 @@ const NovelReader = () => {
                 <Link to={`/novel/${name}`}>
                   <span> {currentNovelData.name}</span>
                 </Link>
-                <p>{currentNovelData.chaptersListData[nextPrevChapter.currentChapterIndex].chapterName}</p>
+                {/* <p>
+                  {
+                    currentNovelData.chaptersListData[nextPrevChapter.currentChapterIndex]
+                      .chapterName
+                  }
+                </p> */}
               </div>
               <div>
-                {nextPrevChapter.prevChapterIndex < currentNovelData.chaptersListData.length ? (
-                  <Link to={`/novel/${name}/${currentNovelData.chaptersListData[nextPrevChapter.prevChapterIndex].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "")}`} className={`btn btn-primary me-1`}>
+                {nextPrevChapter?.prevChapterIndex < currentNovelData.chaptersListData.length ? (
+                  <Link
+                    to={`${currentNovelData.chaptersListData[nextPrevChapter?.prevChapterIndex]}`}
+                    className={`btn btn-primary me-1`}
+                  >
                     <span> &larr; prev </span>
                   </Link>
                 ) : null}
 
-                {nextPrevChapter.nextChapterIndex >= 0 ? (
-                  <Link to={`/novel/${name}/${currentNovelData.chaptersListData[nextPrevChapter.nextChapterIndex].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "")}`} className={`btn btn-primary`}>
+                {nextPrevChapter?.nextChapterIndex >= 0 ? (
+                  <Link
+                    to={`${currentNovelData.chaptersListData[nextPrevChapter?.nextChapterIndex]}`}
+                    className={`btn btn-primary`}
+                  >
+                    <div>
+                      {
+                        currentNovelData.chaptersListData[nextPrevChapter?.nextChapterIndex]
+                          .chapterName
+                      }
+                    </div>
                     <span> next &rarr; </span>
                   </Link>
                 ) : null}
               </div>
             </div>
-            <div className={` ${styles.novelreader__view}`} dangerouslySetInnerHTML={{ __html: chapterData.data }} />
+            <div
+              className={` ${styles.novelreader__view}`}
+              dangerouslySetInnerHTML={{ __html: chapterData.data }}
+            />
 
             <div className="d-flex justify-content-center py-3 ">
-              {nextPrevChapter.prevChapterIndex < currentNovelData.chaptersListData.length ? (
-                <Link to={`/novel/${name}/${currentNovelData.chaptersListData[nextPrevChapter.prevChapterIndex].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "")}`} className={`btn btn-primary me-1`}>
+              {nextPrevChapter?.prevChapterIndex < currentNovelData.chaptersListData.length ? (
+                <Link
+                  to={`/novel/${name}/${currentNovelData.chaptersListData[
+                    nextPrevChapter?.prevChapterIndex
+                  ].chapterLinkName.replace(
+                    `http://light-novel-scraper-api.herokuapp.com/novel/${name}/`,
+                    ""
+                  )}`}
+                  className={`btn btn-primary me-1`}
+                >
                   <span> &larr; prev </span>
                 </Link>
               ) : null}
 
-              {nextPrevChapter.nextChapterIndex >= 0 ? (
-                <Link to={`/novel/${name}/${currentNovelData.chaptersListData[nextPrevChapter.nextChapterIndex].chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}/`, "")}`} className={`btn btn-primary`}>
+              {nextPrevChapter?.nextChapterIndex >= 0 ? (
+                <Link
+                  to={`/novel/${name}/${currentNovelData.chaptersListData[
+                    nextPrevChapter?.nextChapterIndex
+                  ].chapterLinkName.replace(
+                    `http://light-novel-scraper-api.herokuapp.com/novel/${name}/`,
+                    ""
+                  )}`}
+                  className={`btn btn-primary`}
+                >
                   <span> next &rarr;</span>
                 </Link>
               ) : null}

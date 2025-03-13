@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import styles from "./NovelDetails.module.scss";
 import { Link } from "react-router-dom";
 import Page from "../Page";
+import { server_url } from "../../App";
 
 const NovelDetails = () => {
   let { name } = useParams();
@@ -17,7 +18,10 @@ const NovelDetails = () => {
 
   useEffect(() => {
     const request = axios.CancelToken.source();
-    if (localStorage.getItem("currentNovelInfo") && localStorage.getItem("currentNovelName") === name) {
+    if (
+      localStorage.getItem("currentNovelInfo") &&
+      localStorage.getItem("currentNovelName") === name
+    ) {
       setNovelInfo(JSON.parse(localStorage.getItem("currentNovelInfo")));
       setIsLoading(false);
     } else {
@@ -47,7 +51,9 @@ const NovelDetails = () => {
 
   function reverseList() {
     setListReverse(!listReverse);
-    document.getElementById("flex-reverse").style.flexDirection = listReverse ? "column" : "column-reverse";
+    document.getElementById("flex-reverse").style.flexDirection = listReverse
+      ? "column"
+      : "column-reverse";
   }
 
   return (
@@ -86,7 +92,7 @@ const NovelDetails = () => {
               <ListGroup id="flex-reverse" as={"ul"}>
                 {novelInfo.chaptersListData.map((data, i) => {
                   return (
-                    <Link to={`/novel/${name}${data.chapterLinkName.replace(`http://light-novel-scraper-api.herokuapp.com/novel/${name}`, "")}`} key={i}>
+                    <Link to={`${data.chapterLinkName.replace(server_url, "")}`} key={i}>
                       <span>{data.chapterName}</span>
                       <span>{data.chapterReleaseTime}</span>
                     </Link>

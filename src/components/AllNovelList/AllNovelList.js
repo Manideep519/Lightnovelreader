@@ -27,6 +27,7 @@ const AllNovelList = () => {
         .then((response) => {
           setNovelList(response.data);
           setIsLoading(false);
+          console.log(response.data);
         })
         .catch((error) => {
           setIsLoading(true);
@@ -54,7 +55,11 @@ const AllNovelList = () => {
           <h3>All novels</h3>
         </div>
         <FloatingLabel className="ms-auto" controlId="floatingSelect" label="Sort by">
-          <Form.Select disabled={isLoading} onChange={handleCategoryClick} aria-label="Floating label">
+          <Form.Select
+            disabled={isLoading}
+            onChange={handleCategoryClick}
+            aria-label="Floating label"
+          >
             <option value="views">Most views</option>
             <option value="trending">Trending</option>
             <option value="latest">Last updated</option>
@@ -71,17 +76,25 @@ const AllNovelList = () => {
             novelList.map((obj, i) => {
               return (
                 <Col key={i} lg={2} md={3} xs={4}>
-                  <Link data-tip={obj.title} to={`/novel${obj.link.replace("http://light-novel-scraper-api.herokuapp.com/novel", "")}`} className={styles.novellist__box}>
+                  <Link data-tip={obj.title} to={`${obj.link}`} className={styles.novellist__box}>
                     <div>
                       <img src={obj.imageUrl} alt={`${obj.title}`} />
                     </div>
                     <div>
                       <h6>{obj.title}</h6>
                       <div className="text-muted lh-1">
-                        <StarRatingComponent name={"Rating"} value={Math.floor(Number(obj.score))} starCount={5} editing={false} />
+                        <StarRatingComponent
+                          name={"Rating"}
+                          value={Math.floor(Number(obj.score))}
+                          starCount={5}
+                          editing={false}
+                        />
                         <p>{obj.score}</p>
                       </div>
-                      <p className="text-muted">{`${obj.lastestChapter.replace(/[^0-9]/g, "")} Chapters`}</p>
+                      <p className="text-muted">{`${obj.lastestChapter.replace(
+                        /[^0-9]/g,
+                        ""
+                      )} Chapters`}</p>
                     </div>
                   </Link>
                   <ReactTooltip />
@@ -104,7 +117,26 @@ const AllNovelList = () => {
           )}
         </Row>
         <hr />
-        <ReactPaginate nextLabel=">" marginPagesDisplayed={1} onPageChange={handlePageClick} pageRangeDisplayed={2} pageCount={82} previousLabel={"<"} pageClassName={"page-item"} pageLinkClassName={"page-link"} previousClassName={"page-item"} previousLinkClassName={"page-link"} nextClassName={"page-item"} nextLinkClassName={"page-link"} breakLabel="..." breakClassName={"page-item"} breakLinkClassName={"page-link"} containerClassName={"pagination"} activeClassName={"active"} renderOnZeroPageCount={null} />
+        <ReactPaginate
+          nextLabel=">"
+          marginPagesDisplayed={1}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={2}
+          pageCount={82}
+          previousLabel={"<"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakLabel="..."
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+          renderOnZeroPageCount={null}
+        />
       </Container>
     </Container>
   );
